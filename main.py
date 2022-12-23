@@ -10,11 +10,14 @@ pe.init(screenSize)
 p1 = (100, 100)
 p2 = (500, 200)
 t = 0.65
-
-points = [(100,230),
-(200,400),
-(400,200),
-(500, 250)]
+v = 0
+points = [(100,100),#0
+(100,200),#1
+(100,200),#2
+(150,150),#3
+(100,200),
+(100,200),
+(200, 200)]
 
 # b = time.time()
 # for _ in range(15384):
@@ -31,12 +34,18 @@ pe.display.make(screenSize, 'Bezier Curves')
 while True:
     [pe.event.quitCheckAuto() for pe.event.c in pe.event.get()]
 
-    pe.fill.full(pe.colors.verydarkgray)
-    c = 0
-    for point in points:
-        pe.draw.circle(colors[c], point, 5, 2)
-        c += 90
-    pe.pygame.draw.lines(pe.display.display_reference.surface, pe.colors.white, False, curve.spline_curve(points, 20), 2)
+    pe.fill.full(pe.colors.darkaqua)
+    # c = 0
+    # for point in points:
+    #     pe.draw.circle(colors[c], point, 5, 2)
+    #     c += 90
+    v = pe.mouse.pos()[0]/600 * 50
+    points[3] = (100 + v // 10, 200 - v // 10)
+    pe.draw.polygon(pe.colors.verydarkred, curve.spline_curve(points, 100), 0)
+    points[3] = (100+v//1.5,200-v//1.5)
+    pe.draw.polygon(pe.colors.lightgray, curve.spline_curve(points, 100), 0)
+    points[3] = (100+v,200-v)
+    pe.draw.polygon(pe.colors.white, curve.spline_curve(points, 100), 0)
 
     logger.render()
     pe.display.update(120)
